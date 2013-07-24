@@ -4,8 +4,10 @@ $(document).ready(function(){
 	var canvasWidth = $("#canvas").width();
 	var canvasHeight = $("#canvas").height();
 	var pikachu = {x:200, y:200};
-	var pikaDirection;
+	var pikaDirection = "right";
 	var pikaSize = 10;
+	var score = 1;
+	var level = 1;
 
 	var food = {x:100, y:100};
 	var poo = {x:500, y: 400};
@@ -15,6 +17,8 @@ $(document).ready(function(){
 		createPickachu();
 		createFood(true);
 		createPoo(true);
+		paintScore();
+		paintLevel();
 	}
 	init();
 	
@@ -45,7 +49,14 @@ $(document).ready(function(){
 
 		movePikachu();
 		console.log ("pikachu direction: " + pikaDirection + ", size: " + pikaSize);
+
+		// paint numbers
+		paintScore();
+		paintLevel();
+
+
 	});
+
 
 	function movePikachu(){
 		
@@ -59,6 +70,7 @@ $(document).ready(function(){
 
 		if (sameLocation(food)){
 			pikaSize = pikaSize + 10;
+			score = score + 1;
 			createFood(true);
 		} else {
 			createFood(false);
@@ -66,6 +78,7 @@ $(document).ready(function(){
 
 		if (sameLocation(poo)){
 			pikaSize = pikaSize - 10;
+			score = score -1;
 			createPoo(true);
 		} else {
 			createPoo(false);
@@ -123,6 +136,20 @@ $(document).ready(function(){
 			return true;
 		}
 	};
+
+	function paintScore(){
+		ctx.fillStyle="black";
+		ctx.font="12px Cambria";
+		var scoreText = "Score: " + score;
+		ctx.fillText(scoreText, 5, canvasHeight-5);
+	};
+
+	function paintLevel(){
+		ctx.fillStyle="black";
+		ctx.font="15px Cambria";
+		var scoreText = "LEVEL: " + level;
+		ctx.fillText(scoreText, canvasWidth/2-10, 15);	
+	}
 
 
 });
